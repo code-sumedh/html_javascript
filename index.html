@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>I am a dynamic data table from Pokemon API</p>
+
+    <table id="myTable">
+    </table>
+    <br>
+
+
+    <script>
+        function fetchApi() {
+            fetch("https://pokeapi.co/api/v2/pokemon/", {
+                "method": "GET"
+            }).then(response => response.json()).then(response => {
+                console.log("response ", response);
+                if (response) {
+                    var table = document.getElementById("myTable");
+                    console.log("table : ", table);
+                    for (let i = 0; i < response.results.length; i++) {
+                        var row = table.insertRow(i);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.innerHTML = response.results[i].name;
+                        cell2.innerHTML = response.results[i].url;
+                    }
+                }
+            })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
+        fetchApi();
+    </script>
+
+</body>
+
+</html>
